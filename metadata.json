@@ -1,0 +1,6 @@
+{
+  "name": "SpeedNet",
+  "description": "پنل مدیریت پیشرفته وی‌پی‌ان با قابلیت‌های Xray/Vless+WS",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,31 @@
+-- Supabase Setup SQL
+CREATE TABLE IF NOT EXISTS admin (
+  id SERIAL PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL,
+  uuid TEXT NOT NULL,
+  data_limit_gb REAL NOT NULL,
+  used_gb REAL DEFAULT 0,
+  expire_date TEXT,
+  status TEXT DEFAULT 'active',
+  network TEXT DEFAULT 'ws',
+  fingerprint TEXT DEFAULT 'chrome',
+  port INTEGER DEFAULT 443
+);
+
+CREATE TABLE IF NOT EXISTS settings (
+  key TEXT PRIMARY KEY,
+  value TEXT
+);
+
+CREATE OR REPLACE FUNCTION increment_usage(user_uuid TEXT, amount_gb REAL)
+RETURNS void AS $$
+BEGIN
+  UPDATE users SET used_gb = used_gb + amount_gb WHERE uuid = user_uuid;
+END;
+$$ LANGUAGE plpgsql;
